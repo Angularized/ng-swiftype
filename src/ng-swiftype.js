@@ -119,7 +119,9 @@ angular.module('ngSwiftype')
     restrict: 'E',
     controller: SwiftypeController,
     replace: true,
-    templateUrl: '/scripts/swiftype-autocomplete.html',
+    templateUrl: function(element, attributes) {
+      return attributes.templateUrl;
+    },
     link: function(scope, element, attributes) {
 
       scope.engine_key = attributes.engineKey;
