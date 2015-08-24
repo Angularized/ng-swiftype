@@ -1,0 +1,21 @@
+{
+  "name": "ng-swiftype",
+  "version": "0.0.0",
+  "homepage": "https://github.com/Angularized/ng-swiftype",
+  "authors": [
+    "Eric Sun <ericsun977@gmail.com>"
+  ],
+  "keywords": [
+    "swiftype",
+    "angular",
+    "autocomplete"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
