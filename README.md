@@ -1,1 +1,1 @@
-# ng-swifttype
+# ng-swiftype
