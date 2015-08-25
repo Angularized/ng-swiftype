@@ -116,7 +116,7 @@ angular.module('ngSwiftype')
   }];
 
   return {
-    restrict: 'E',
+    restrict: 'CE',
     controller: SwiftypeController,
     link: function(scope, element, attributes) {
 
