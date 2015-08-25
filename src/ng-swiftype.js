@@ -118,10 +118,6 @@ angular.module('ngSwiftype')
   return {
     restrict: 'E',
     controller: SwiftypeController,
-    replace: true,
-    templateUrl: function(element, attributes) {
-      return attributes.templateUrl;
-    },
     link: function(scope, element, attributes) {
 
       scope.engine_key = attributes.engineKey;
