@@ -92,6 +92,11 @@ angular.module('ngSwiftype')
       api.search(params).then(success_handler, failed_handler);
     }
 
+    function deactive_swiftype() {
+      // setting a flag to rootscope for closing Swiftype
+      $rootScope.swiftype_active = false;
+    }
+
     $scope.search_by = function(page, document_type) {
       query_from_swiftype(page, document_type);
     };
