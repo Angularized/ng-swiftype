@@ -1,0 +1,39 @@
+{
+  "name": "ng-swiftype",
+  "version": "0.0.1",
+  "description": "",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Angularized/ng-swiftype.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Angularized/ng-swiftype/issues"
+  },
+  "homepage": "https://github.com/Angularized/ng-swiftype#readme",
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-concat": "^2.5.2",
+    "gulp-insert": "^0.4.0",
+    "gulp-jshint": "^1.10.0",
+    "gulp-livereload": "^3.8.0",
+    "gulp-ngdocs": "^0.2.10",
+    "gulp-uglifyjs": "^0.6.1",
+    "gulp-watch": "^4.2.4",
+    "jasmine-core": "^2.2.0",
+    "jasmine-reporters": "^2.0.5",
+    "jshint-stylish": "^1.0.1",
+    "karma": "^0.12.31",
+    "karma-clear-screen-reporter": "0.0.1",
+    "karma-coverage": "^0.2.4",
+    "karma-jasmine": "^0.3.5",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "karma-read-json": "^1.1.0",
+    "karma-spec-reporter": "0.0.18"
+  }
+}
