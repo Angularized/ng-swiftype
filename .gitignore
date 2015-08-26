@@ -1,0 +1,11 @@
+dist
+docs
+coverage
+
+bower_components
+node_modules
+
+npm-debug.log
+.DS_Store
+
+.sass-cache
