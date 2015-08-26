@@ -136,4 +136,14 @@ angular.module('ngSwiftype')
       element.bind('keyup', scope.keyup);
     }
   };
-}]);
+}])
+
+.directive('autoFocus', function() {
+  return {
+    link: {
+      post: function postLink(scope, element) {
+        element[0].focus();
+      }
+    }
+  }
+});;
