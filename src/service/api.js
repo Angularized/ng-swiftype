@@ -7,7 +7,11 @@ service('ngSwiftype.api', [ '$http', 'ngSwiftype.cache', function($http, Swiftyp
 
   this.search = function(params) {
 
-    var config = params || {};
+    if(!params && typeof params !== 'object') {
+      return false;
+    }
+
+    var config = {};
 
     config.q = params.q;
     config.engine_key = params.engine_key;
