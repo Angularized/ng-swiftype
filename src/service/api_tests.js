@@ -1,7 +1,6 @@
 describe('ngSwiftype Service', function(){
 
-  var $httpBackend,
-      Api,
+  var Api,
       params;
 
 
@@ -10,9 +9,6 @@ describe('ngSwiftype Service', function(){
 
   beforeEach(function() {
     angular.mock.inject(function($injector){
-      
-      $httpBackend = $injector.get('$httpBackend');
-      
       Api = $injector.get('ngSwiftype.api');
     });
   });
