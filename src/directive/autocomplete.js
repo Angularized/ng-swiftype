@@ -4,13 +4,14 @@ directive('swiftypeAutocomplete', [ 'ngSwiftype.api', function(api){
 
   var SwiftypeController = ['$scope', function( $scope ) {
     
+
     $scope.results = {},
     $scope.error = {},
     $scope.loading = false;
 
     var params = {};
 
-    function success_handler(response) {
+    function result_handler(response) {
 
       var info = response.data.info,
           records = response.data.records,
@@ -30,15 +31,6 @@ directive('swiftypeAutocomplete', [ 'ngSwiftype.api', function(api){
 
     }
 
-    function failed_handler(response) {
-      $scope.error = {
-        status: response.status,
-        statusText: response.statusText
-      };
-
-      $scope.loading = false; // finish loading
-    }
-
     function query_from_swiftype(page, document_types) {
 
       $scope.loading = true; // start loading
@@ -52,14 +44,9 @@ directive('swiftypeAutocomplete', [ 'ngSwiftype.api', function(api){
       params.filters = $scope.filters;
 
       // params.document_types = document_types || undefined; // TODO: swiftype reponse error when posting proper array type param, need to figure out why.
-      params.page = page || 1;
+      params.page = page;
 
-      api.search(params).then(success_handler, failed_handler);
-    }
-
-    function deactive_swiftype() {
-      // setting a flag to rootscope for closing Swiftype
-      $rootScope.swiftype_active = false;
+      api.search(params).then(result_handler);
     }
 
     $scope.search_by = function(page, document_type) {
@@ -90,17 +77,19 @@ directive('swiftypeAutocomplete', [ 'ngSwiftype.api', function(api){
     controller: SwiftypeController,
     link: function(scope, element, attributes) {
 
+
+      if(!attributes.engineKey) {
+         scope.error = {
+          statusText : 'Missing engine key'
+        };
+        return false;
+      }
+
       scope.engine_key = attributes.engineKey;
       scope.limits = attributes.limits;
       
       if(attributes.fetchFields) {
         scope.fetch_fields = JSON.parse(attributes.fetchFields);  
-      }
-      if(attributes.searchFields) {
-        scope.search_fields = JSON.parse(attributes.searchFields);  
-      }
-      if(attributes.filters) {
-        scope.filters = JSON.parse(attributes.filters);
       }
 
       element.bind('keyup', scope.keyup);
