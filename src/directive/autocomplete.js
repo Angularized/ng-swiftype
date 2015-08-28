@@ -72,7 +72,7 @@ directive('swiftypeAutocomplete', [ 'ngSwiftype.api', function(api){
 
       // ignore arrow keys, shift
       if (((keycode > 36) && (keycode < 41)) || (keycode == 16)) {
-        return;
+        return false;
       }
       
       if ( $scope.term && $scope.term.length > 2 ) {
@@ -91,7 +91,7 @@ directive('swiftypeAutocomplete', [ 'ngSwiftype.api', function(api){
     link: function(scope, element, attributes) {
 
       scope.engine_key = attributes.engineKey;
-      scope.limits = attributes.limits || 20;
+      scope.limits = attributes.limits;
       
       if(attributes.fetchFields) {
         scope.fetch_fields = JSON.parse(attributes.fetchFields);  
