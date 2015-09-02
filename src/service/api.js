@@ -31,5 +31,5 @@ service('ngSwiftype.api', [ '$http', 'ngSwiftype.cache', function($http, Swiftyp
       params: config,
       cache: SwiftypeCache
     });
-  }
+  };
 }]);
