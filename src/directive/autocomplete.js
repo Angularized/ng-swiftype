@@ -1,5 +1,4 @@
 angular.module('ngSwiftype').
-
 directive('swiftypeAutocomplete', ['ngSwiftype.api', function(api) {
 
   var SwiftypeController = ['$scope', function($scope) {

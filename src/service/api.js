@@ -1,6 +1,4 @@
 angular.module('ngSwiftype').
-
-
 service('ngSwiftype.api', [ '$http', 'ngSwiftype.cache', function($http, SwiftypeCache ) {
 
   var endpoint = 'https://api.swiftype.com/api/v1/public/engines/suggest.json';
