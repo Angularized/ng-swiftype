@@ -5,9 +5,8 @@ directive('swiftypeAutocomplete', [ 'ngSwiftype.api', function(api){
 
   var SwiftypeController = ['$scope', function( $scope ) {
     
-
-    $scope.results = {},
-    $scope.error = {},
+    $scope.results = {};
+    $scope.error = {};
     $scope.loading = false;
 
     var params = {};
@@ -18,13 +17,12 @@ directive('swiftypeAutocomplete', [ 'ngSwiftype.api', function(api){
           records = response.data.records,
           total_records = 0;
 
-      for(key in info) {
+      for(var key in info) {
         $scope.results[key] = info[key];
         $scope.results[key].records = records[key];
 
         total_records += info[key].total_result_count;
-
-      };
+      }
 
       $scope.results.record_count = total_records; // get total search result
 
@@ -53,7 +51,7 @@ directive('swiftypeAutocomplete', [ 'ngSwiftype.api', function(api){
     $scope.search_by = function(page, document_type) {
       query_from_swiftype(page, document_type);
     };
-    
+       
     $scope.keyup = function(event) {
 
       var keycode = event.keyCode || event.which;
@@ -135,5 +133,5 @@ service('ngSwiftype.api', [ '$http', 'ngSwiftype.cache', function($http, Swiftyp
       params: config,
       cache: SwiftypeCache
     });
-  }
+  };
 }]);
