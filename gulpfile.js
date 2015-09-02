@@ -1,29 +1,61 @@
-var gulp = require('gulp'),
-    concat = require('gulp-concat'),
-    insert = require('gulp-insert'),
-    jshint = require('gulp-jshint'),
-    livereload = require('gulp-livereload'),
-    ngdocs = require('gulp-ngdocs'),
-    pkg = require('./package.json'),
-    uglifyjs = require('gulp-uglifyjs'),
-    watch = require('gulp-watch');
+var gulp = require('gulp');
+var del = require('del');
+var runSequence = require('run-sequence');
+var browserSync = require('browser-sync').create();
+var plugins = require('gulp-load-plugins')();
 
 var karma = require('karma').server;
-
 var reporters = require('jasmine-reporters');
 
 // Because 'watch' dies onError
-function errorHandler(error) {
-  console.log(error.toString());
+var swallowError = function(err) {
+  plugins.util.log(err.toString());
   this.emit('end');
-}
+};
 
-// Lint
+// Clean task
+gulp.task('clean', function(callback){
+  del(['dist'], callback);
+});
+
+
+// Lint task
 gulp.task('lint', function() {
   return gulp.src('src/**/*.js')
-    .pipe(jshint())
-    .pipe(jshint.reporter('jshint-stylish'))
-    .pipe(jshint.reporter('fail'));
+    .pipe(plugins.jshint())
+    .pipe(plugins.jshint.reporter('jshint-stylish'))
+    .pipe(plugins.jshint.reporter('default'));
+});
+
+// Concatenate & Minify JS
+gulp.task('scripts', function() {
+  return gulp.src(['src/**/*.js', '!src/**/*_tests.js',])
+    .pipe(plugins.concat('ng-swiftype.js'))
+    .pipe(gulp.dest('dist'))
+    .pipe(plugins.concat('ng-swiftype.min.js'))
+    .pipe(plugins.uglifyjs({
+      outSourceMap: true
+    }))
+    .on('error', swallowError)
+    .pipe(gulp.dest('dist'));
+});
+
+// Build task
+gulp.task('build', function(callback) {
+  runSequence('clean', ['lint', 'scripts'], callback);
+});
+
+// Serve Task
+gulp.task('serve', ['build'], function() {
+  browserSync.init({
+    server: {
+      baseDir: 'demo/'
+    }
+  });
+
+  gulp.watch('src/**/*', ['lint','scripts']).on('error', swallowError);
+  gulp.watch('dist/**/*').on("change", browserSync.reload).on('error', swallowError);
+  
 });
 
 // Run Tests Continuously
@@ -68,36 +100,6 @@ gulp.task('test-report', function (done) {
   }, done);
 });
 
-// Run Tests and Code Coverage Report [Jenkins]
-gulp.task('test-jenkins', function (done) {
-  karma.start({
-    configFile: __dirname + '/karma.conf.js',
-    singleRun: true,
-    reporters: ['spec', 'coverage'],
-    specReporter: {
-      suppressPassed: false
-    },
-    coverageReporter: {
-      reporters: [
-        {type: 'text-summary'},
-        {type: 'cobertura', subdir: 'jenkins'}
-      ]
-    },
-  }, done);
-});
-
-// Concatenate & Minify JS
-gulp.task('build', function() {
-  return gulp.src(['src/ng-swiftype.js', '!src/**/*_tests.js','src/**/*.js'])
-    .pipe(concat('ng-swiftype.js'))
-    .pipe(gulp.dest('dist'))
-    .pipe(concat('ng-swiftype.min.js'))
-    .pipe(uglifyjs({
-      outSourceMap: true
-    }))
-    .on('error', errorHandler)
-    .pipe(gulp.dest('dist'));
-});
 
 // Default Task
 gulp.task('default', ['lint', 'test']);
@@ -105,7 +107,3 @@ gulp.task('default', ['lint', 'test']);
 gulp.task('test:tdd', ['lint', 'test-tdd']);
 
 gulp.task('test:report', ['lint', 'test-report']);
-
-gulp.task('test:jenkins', ['lint', 'test-jenkins'])
-
-gulp.task('watch:docs', ['watch-ngdocs']);
