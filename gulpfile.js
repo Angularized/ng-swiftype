@@ -46,7 +46,7 @@ gulp.task('build', function(callback) {
 });
 
 // Serve Task
-gulp.task('serve', ['build'], function() {
+gulp.task('demo', ['build'], function() {
   browserSync.init({
     server: {
       baseDir: 'demo/'
@@ -54,8 +54,7 @@ gulp.task('serve', ['build'], function() {
   });
 
   gulp.watch('src/**/*', ['lint','scripts']).on('error', swallowError);
-  gulp.watch('dist/**/*').on("change", browserSync.reload).on('error', swallowError);
-  
+  gulp.watch(['dist/**/*','demo/**/*']).on("change", browserSync.reload).on('error', swallowError);
 });
 
 // Run Tests Continuously
