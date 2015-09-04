@@ -26,7 +26,7 @@ service('ngSwiftype.api', [ '$http', 'ngSwiftype.cache', function($http, Swiftyp
     return $http({
       method: 'POST',
       url: endpoint,
-      params: config,
+      data: config,
       cache: SwiftypeCache
     });
   };
