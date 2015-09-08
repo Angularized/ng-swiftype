@@ -1,5 +1,9 @@
 angular.module('ngSwiftype',[]);
 angular.module('ngSwiftype').
+factory('ngSwiftype.cache', [ '$cacheFactory', function($cacheFactory){
+  return $cacheFactory('cache');
+}]);
+angular.module('ngSwiftype').
 directive('swiftypeAutocomplete', ['ngSwiftype.api', function(api) {
 
   var SwiftypeController = ['$scope', function($scope) {
@@ -93,10 +97,6 @@ directive('swiftypeAutocomplete', ['ngSwiftype.api', function(api) {
       element.bind('keyup', scope.keyup);
     }
   };
-}]);
-angular.module('ngSwiftype').
-factory('ngSwiftype.cache', [ '$cacheFactory', function($cacheFactory){
-  return $cacheFactory('cache');
 }]);
 angular.module('ngSwiftype').
 service('ngSwiftype.api', [ '$http', 'ngSwiftype.cache', function($http, SwiftypeCache ) {

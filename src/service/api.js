@@ -27,6 +27,13 @@ service('ngSwiftype.api', [ '$http', 'ngSwiftype.cache', function($http, Swiftyp
       method: 'POST',
       url: endpoint,
       data: config,
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8'
+      },
+      transformRequest: function (data) {
+        var result = JSON.stringify(data);
+        return result;
+      },
       cache: SwiftypeCache
     });
   };
