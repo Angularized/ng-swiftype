@@ -74,24 +74,28 @@ describe('ngSwiftype.Autocomplete', function(){
     element = angular.element('<div class="swiftype-autocomplete" engine-key="12345"></div>');
     element = $compile(element)($scope);
     $scope.$digest();
+    expect($scope.engine_key).toBeDefined();
     expect($scope.engine_key).toBe('12345');
   });
 
-  it('should able to resove the fetch-fields attribute', function() {
+  it('should able to resolve the fetch-fields attribute', function() {
     element = angular.element('<div class="swiftype-autocomplete" engine-key="12345" fetch-fields=\'{"document_type": ["field_1", "field_1"]}\'></div>');
     element = $compile(element)($scope);
     $scope.$digest();
     expect($scope.fetch_fields).toEqual({document_type: ['field_1', 'field_1']});
   });
 
-  it('should able to resove the search-fields attribute', function() {
-    
+  it('should able to resolve the filters attribute.', function() {
+    element = angular.element('<div class="swiftype-autocomplete" engine-key="12345" filters=\'{"books":{"genre":"fiction","in_stock":true}}\'></div>');
+    element = $compile(element)($scope);
+    $scope.$digest();
+    expect($scope.filters).toEqual({books:{genre:"fiction",in_stock:true}});
   });
 
   describe('key handling', function() {
     beforeEach(function() {
 
-      element = angular.element('<div class="swiftype-autocomplete" engine-key="12345" ></div>');
+      element = angular.element('<div class="swiftype-autocomplete" engine-key="12345"></div>');
       element = $compile(element)($scope);
 
       mock_keyup = {

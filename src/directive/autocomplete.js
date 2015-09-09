@@ -89,6 +89,10 @@ directive('swiftypeAutocomplete', ['ngSwiftype.api', function(api) {
         scope.fetch_fields = JSON.parse(attributes.fetchFields);
       }
 
+      if (attributes.filters) {
+        scope.filters = JSON.parse(attributes.filters);
+      }
+
       element.bind('keyup', scope.keyup);
     }
   };
