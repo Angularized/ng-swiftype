@@ -164,7 +164,7 @@ describe('ngSwiftype.Autocomplete', function(){
       $scope.results = {};
       $httpBackend.whenPOST(/.*/).respond(mock_results);
 
-      $scope.search_by(2);
+      $scope.get_page(2);
 
       $httpBackend.flush();
       expect($scope.results).not.toEqual({});

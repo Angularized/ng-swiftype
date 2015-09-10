@@ -33,20 +33,20 @@ directive('swiftypeAutocomplete', ['ngSwiftype.api', function(api) {
       $scope.loading = true; // start loading
 
       params.q = $scope.term;
-      params.engine_key = $scope.engine_key; // TODO: change this to CONST
+      params.engine_key = $scope.engine_key;
       params.per_page = $scope.limits;
 
       params.fetch_fields = $scope.fetch_fields;
       params.search_fields = $scope.search_fields;
       params.filters = $scope.filters;
 
-      // params.document_types = document_types || undefined; // TODO: swiftype reponse error when posting proper array type param, need to figure out why.
+      params.document_types = document_types;
       params.page = page;
 
       api.search(params).then(result_handler);
     }
 
-    $scope.search_by = function(page, document_type) {
+    $scope.get_page = function(page, document_type) {
       query_from_swiftype(page, document_type);
     };
 
