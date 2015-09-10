@@ -1,49 +1,5 @@
 angular.module('ngSwiftype',[]);
 angular.module('ngSwiftype').
-factory('ngSwiftype.cache', [ '$cacheFactory', function($cacheFactory){
-  return $cacheFactory('cache');
-}]);
-angular.module('ngSwiftype').
-service('ngSwiftype.api', [ '$http', 'ngSwiftype.cache', function($http, SwiftypeCache ) {
-
-  var endpoint = 'https://api.swiftype.com/api/v1/public/engines/suggest.json';
-
-  this.search = function(params) {
-
-    if(!params && typeof params !== 'object') {
-      return false;
-    }
-
-    var config = {};
-
-    config.q = params.q;
-    config.engine_key = params.engine_key;
-    config.page = params.page || 1;
-    config.per_page = params.per_page || 20;
-    config.search_fields = params.search_fields;
-    config.fetch_fields = params.fetch_fields;
-    config.filters = params.filters;
-    config.document_types = params.document_types;
-    config.functional_boosts = params.functional_boosts;
-    config.sort_field = params.sort_field;
-    config.sort_direction = params.sort_direction;
-
-    return $http({
-      method: 'POST',
-      url: endpoint,
-      data: config,
-      headers: {
-        'Content-Type': 'application/json;charset=UTF-8'
-      },
-      transformRequest: function (data) {
-        var result = JSON.stringify(data);
-        return result;
-      },
-      cache: SwiftypeCache
-    });
-  };
-}]);
-angular.module('ngSwiftype').
 directive('swiftypeAutocomplete', ['ngSwiftype.api', function(api) {
 
   var SwiftypeController = ['$scope', function($scope) {
@@ -78,20 +34,20 @@ directive('swiftypeAutocomplete', ['ngSwiftype.api', function(api) {
       $scope.loading = true; // start loading
 
       params.q = $scope.term;
-      params.engine_key = $scope.engine_key; // TODO: change this to CONST
+      params.engine_key = $scope.engine_key;
       params.per_page = $scope.limits;
 
       params.fetch_fields = $scope.fetch_fields;
       params.search_fields = $scope.search_fields;
       params.filters = $scope.filters;
 
-      // params.document_types = document_types || undefined; // TODO: swiftype reponse error when posting proper array type param, need to figure out why.
+      params.document_types = document_types;
       params.page = page;
 
       api.search(params).then(result_handler);
     }
 
-    $scope.search_by = function(page, document_type) {
+    $scope.get_page = function(page, document_type) {
       query_from_swiftype(page, document_type);
     };
 
@@ -140,5 +96,49 @@ directive('swiftypeAutocomplete', ['ngSwiftype.api', function(api) {
 
       element.bind('keyup', scope.keyup);
     }
+  };
+}]);
+angular.module('ngSwiftype').
+factory('ngSwiftype.cache', [ '$cacheFactory', function($cacheFactory){
+  return $cacheFactory('cache');
+}]);
+angular.module('ngSwiftype').
+service('ngSwiftype.api', [ '$http', 'ngSwiftype.cache', function($http, SwiftypeCache ) {
+
+  var endpoint = 'https://api.swiftype.com/api/v1/public/engines/suggest.json';
+
+  this.search = function(params) {
+
+    if(!params && typeof params !== 'object') {
+      return false;
+    }
+
+    var config = {};
+
+    config.q = params.q;
+    config.engine_key = params.engine_key;
+    config.page = params.page || 1;
+    config.per_page = params.per_page || 20;
+    config.search_fields = params.search_fields;
+    config.fetch_fields = params.fetch_fields;
+    config.filters = params.filters;
+    config.document_types = params.document_types;
+    config.functional_boosts = params.functional_boosts;
+    config.sort_field = params.sort_field;
+    config.sort_direction = params.sort_direction;
+
+    return $http({
+      method: 'POST',
+      url: endpoint,
+      data: config,
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8'
+      },
+      transformRequest: function (data) {
+        var result = JSON.stringify(data);
+        return result;
+      },
+      cache: SwiftypeCache
+    });
   };
 }]);
