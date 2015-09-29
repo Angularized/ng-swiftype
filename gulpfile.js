@@ -34,7 +34,8 @@ gulp.task('scripts', function() {
     .pipe(gulp.dest('dist'))
     .pipe(plugins.concat('ng-swiftype.min.js'))
     .pipe(plugins.uglifyjs({
-      outSourceMap: true
+      outSourceMap: true,
+      sourceRoot: './'
     }))
     .on('error', swallowError)
     .pipe(gulp.dest('dist'));
