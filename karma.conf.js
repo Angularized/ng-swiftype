@@ -10,7 +10,7 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine', 'phantomjs-shim'],
 
 
     // list of files / patterns to load in the browser
@@ -37,7 +37,8 @@ module.exports = function(config) {
       'karma-coverage',
       'karma-phantomjs-launcher',
       'karma-spec-reporter',
-      'karma-clear-screen-reporter'
+      'karma-clear-screen-reporter',
+      'karma-phantomjs-shim'
     ],
 
     // test results reporter to use
