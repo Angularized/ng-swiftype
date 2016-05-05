@@ -19,7 +19,7 @@
     "test",
     "tests"
   ],
-  "main": "src/_ng-swiftype.js",
+  "main": "dist/ng-swiftype.min.js",
   "dependencies": {
     "angular": ">=1.4"
   },
