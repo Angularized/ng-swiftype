@@ -105,7 +105,7 @@ factory('ngSwiftype.cache', [ '$cacheFactory', function($cacheFactory){
 angular.module('ngSwiftype').
 service('ngSwiftype.api', [ '$http', 'ngSwiftype.cache', function($http, SwiftypeCache ) {
 
-  var endpoint = 'https://api.swiftype.com/api/v1/public/engines/suggest.json';
+  var endpoint = 'https://api.swiftype.com/api/v1/public/engines/search.json';
 
   this.search = function(params) {
 
