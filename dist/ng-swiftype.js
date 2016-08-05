@@ -41,7 +41,7 @@ directive('swiftypeAutocomplete', ['ngSwiftype.api', function(api) {
       params.search_fields = $scope.search_fields;
       params.filters = $scope.filters;
 
-      params.document_types = document_types;
+      params.document_types = document_types || $scope.documentTypes;
       params.page = page;
 
       api.search(params).then(result_handler);
@@ -94,10 +94,15 @@ directive('swiftypeAutocomplete', ['ngSwiftype.api', function(api) {
         scope.filters = JSON.parse(attributes.filters);
       }
 
+      if (attributes.documentTypes) {
+        scope.documentTypes = JSON.parse(attributes.documentTypes);
+      }
+
       element.bind('keyup', scope.keyup);
     }
   };
 }]);
+
 angular.module('ngSwiftype').
 factory('ngSwiftype.cache', [ '$cacheFactory', function($cacheFactory){
   return $cacheFactory('cache');
