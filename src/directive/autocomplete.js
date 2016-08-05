@@ -40,7 +40,7 @@ directive('swiftypeAutocomplete', ['ngSwiftype.api', function(api) {
       params.search_fields = $scope.search_fields;
       params.filters = $scope.filters;
 
-      params.document_types = document_types;
+      params.document_types = document_types || $scope.documentTypes;
       params.page = page;
 
       api.search(params).then(result_handler);
@@ -91,6 +91,10 @@ directive('swiftypeAutocomplete', ['ngSwiftype.api', function(api) {
 
       if (attributes.filters) {
         scope.filters = JSON.parse(attributes.filters);
+      }
+
+      if (attributes.documentTypes) {
+        scope.documentTypes = JSON.parse(attributes.documentTypes);
       }
 
       element.bind('keyup', scope.keyup);
