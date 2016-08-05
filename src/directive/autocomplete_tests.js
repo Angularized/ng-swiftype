@@ -69,13 +69,22 @@ describe('ngSwiftype.Autocomplete', function(){
     expect($scope.engine_key).toBe(undefined);
 
   });
-  
+
   it('should have an engine_key', function() {
     element = angular.element('<div class="swiftype-autocomplete" engine-key="12345"></div>');
     element = $compile(element)($scope);
     $scope.$digest();
     expect($scope.engine_key).toBeDefined();
     expect($scope.engine_key).toBe('12345');
+  });
+
+  it('should able to accept document-types attribute.', function() {
+
+    $scope.document_types = ['series'];
+    element = angular.element('<div class="swiftype-autocomplete" engine-key="12345" document-types="{{document_types}}"></div>');
+    element = $compile(element)($scope);
+    $scope.$digest();
+    expect($scope.documentTypes).toEqual(['series']);
   });
 
   it('should able to resolve the fetch-fields attribute', function() {
@@ -113,11 +122,11 @@ describe('ngSwiftype.Autocomplete', function(){
       expect($scope.results).toBeDefined();
     });
 
-    it('should ignore arrow keys and shift key', function() {    
+    it('should ignore arrow keys and shift key', function() {
       mock_keyup = {};
       mock_keyup.keyCode = 37;
       expect($scope.keyup(mock_keyup)).toBeFalsy();
-      
+
       mock_keyup = {};
       mock_keyup.which = 42;
       expect($scope.keyup(mock_keyup)).toBeFalsy();
@@ -149,9 +158,9 @@ describe('ngSwiftype.Autocomplete', function(){
       $scope.term = 'this';
 
     });
-    
+
     it('should able to resolve search results', function() {
-      
+
       $scope.results = {};
       $httpBackend.whenPOST(/.*/).respond(mock_results);
       $scope.keyup(mock_keyup);
@@ -170,6 +179,6 @@ describe('ngSwiftype.Autocomplete', function(){
       expect($scope.results).not.toEqual({});
     });
   });
-  
+
 
 });
